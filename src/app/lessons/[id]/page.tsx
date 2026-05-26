@@ -2,15 +2,15 @@ import LessonCard from "@/components/LessonCard";
 import { lessons } from "@/data/lessons";
 import { notFound } from "next/navigation";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
+export default async function LessonPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
-export default function LessonPage({ params }: Props) {
   const lesson = lessons.find(
-    (lesson) => lesson.slug === params.id
+    (lesson) => lesson.slug === id
   );
 
   if (!lesson) {
