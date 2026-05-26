@@ -123,6 +123,21 @@ export default function QuestionsPage() {
           >
             Ask another question
           </button>
+          <Link
+            href="/"
+            style={{
+              background: "white",
+              color: "#374151",
+              textDecoration: "none",
+              fontSize: "14px",
+              fontWeight: 400,
+              padding: "0.65rem 1.25rem",
+              borderRadius: "12px",
+              border: "0.5px solid #ddd8ce",
+            }}
+          >
+            Go to home
+          </Link>
         </div>
       </div>
     );
@@ -223,7 +238,7 @@ export default function QuestionsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div>
               <FieldLabel text="Your name" />
-              <input type="text" name="name" required placeholder="e.g. Lea" style={inputStyle} />
+              <input type="text" name="name" required placeholder="e.g. Erzsébet" style={inputStyle} />
             </div>
             <div>
               <FieldLabel text="Your email" />
