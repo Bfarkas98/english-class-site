@@ -238,7 +238,7 @@ export default function QuestionsPage() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div>
               <FieldLabel text="Your name" />
-              <input type="text" name="name" required placeholder="e.g. Erzsébet" style={inputStyle} />
+              <input type="text" name="name" required placeholder="e.g. Lea" style={inputStyle} />
             </div>
             <div>
               <FieldLabel text="Your email" />
