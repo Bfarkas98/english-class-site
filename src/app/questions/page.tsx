@@ -1,3 +1,5 @@
+import "./questions.css";
+
 export default function QuestionsPage() {
   return (
     <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -92,7 +94,6 @@ export default function QuestionsPage() {
           method="POST"
           style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
         >
-
           {/* Name + Email row */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div>
@@ -138,22 +139,7 @@ export default function QuestionsPage() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
               {["Vocabulary", "Homework", "Grammar", "Pronunciation", "Speaking", "General"].map(
                 (type) => (
-                  <label
-                    key={type}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      fontSize: "13px",
-                      color: "#374151",
-                      cursor: "pointer",
-                      background: "#f9f7f3",
-                      border: "0.5px solid #e8e3da",
-                      borderRadius: "100px",
-                      padding: "5px 12px",
-                      userSelect: "none",
-                    }}
-                  >
+                  <label key={type} className="q-pill">
                     <input
                       type="radio"
                       name="questionType"
@@ -193,28 +179,10 @@ export default function QuestionsPage() {
             <p style={{ fontSize: "12px", color: "#9ca3af", fontWeight: 300, margin: 0 }}>
               Beni will reply as soon as possible.
             </p>
-            <button
-              type="submit"
-              style={{
-                background: "#1a2e1a",
-                color: "#f5e6a3",
-                border: "none",
-                borderRadius: "12px",
-                padding: "0.7rem 1.5rem",
-                fontSize: "14px",
-                fontWeight: 500,
-                cursor: "pointer",
-                fontFamily: "Georgia, serif",
-                letterSpacing: "0.01em",
-                transition: "opacity 0.15s",
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.opacity = "0.85")}
-              onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
-            >
+            <button type="submit" className="q-submit">
               Send question →
             </button>
           </div>
-
         </form>
       </div>
 
