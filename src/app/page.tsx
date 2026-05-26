@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <div className="space-y-8">
@@ -13,35 +15,41 @@ export default function HomePage() {
       </section>
 
       <section className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-2xl shadow p-6">
-          <h2 className="text-2xl font-semibold mb-2">
-            Lessons
-          </h2>
+        <Link href="/lessons">
+          <div className="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition cursor-pointer h-full">
+            <h2 className="text-2xl font-semibold mb-2">
+              Lessons
+            </h2>
 
-          <p className="text-gray-700">
-            Review lesson notes and vocabulary.
-          </p>
-        </div>
+            <p className="text-gray-700">
+              Review lesson notes and vocabulary.
+            </p>
+          </div>
+        </Link>
 
-        <div className="bg-white rounded-2xl shadow p-6">
-          <h2 className="text-2xl font-semibold mb-2">
-            Calendar
-          </h2>
+        <Link href="/calendar">
+          <div className="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition cursor-pointer h-full">
+            <h2 className="text-2xl font-semibold mb-2">
+              Calendar
+            </h2>
 
-          <p className="text-gray-700">
-            Check upcoming lesson times.
-          </p>
-        </div>
+            <p className="text-gray-700">
+              Check upcoming lesson times.
+            </p>
+          </div>
+        </Link>
 
-        <div className="bg-white rounded-2xl shadow p-6">
-          <h2 className="text-2xl font-semibold mb-2">
-            Questions
-          </h2>
+        <Link href="/questions">
+          <div className="bg-white rounded-2xl shadow p-6 hover:shadow-xl transition cursor-pointer h-full">
+            <h2 className="text-2xl font-semibold mb-2">
+              Questions
+            </h2>
 
-          <p className="text-gray-700">
-            Send questions directly to Beni.
-          </p>
-        </div>
+            <p className="text-gray-700">
+              Send questions directly to Beni.
+            </p>
+          </div>
+        </Link>
       </section>
     </div>
   );
