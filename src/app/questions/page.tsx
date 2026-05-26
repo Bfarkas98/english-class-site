@@ -1,6 +1,133 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
 import "./questions.css";
 
 export default function QuestionsPage() {
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    await fetch("https://formspree.io/f/mnjrodqn", {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    });
+    setLoading(false);
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div
+        style={{
+          maxWidth: "520px",
+          margin: "4rem auto 0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1.5rem",
+          textAlign: "center",
+        }}
+      >
+        {/* Icon */}
+        <div
+          style={{
+            width: "64px",
+            height: "64px",
+            borderRadius: "20px",
+            background: "#1a2e1a",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "28px",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage:
+                "repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(255,255,255,0.05) 11px, rgba(255,255,255,0.05) 12px)",
+            }}
+          />
+          <span style={{ position: "relative", zIndex: 1 }}>✉️</span>
+        </div>
+
+        <div>
+          <h1
+            style={{
+              fontFamily: "Georgia, serif",
+              fontSize: "1.75rem",
+              fontWeight: 600,
+              color: "#111827",
+              margin: "0 0 0.5rem",
+              lineHeight: 1.2,
+            }}
+          >
+            Question <em style={{ fontStyle: "italic", color: "#7c9e5e" }}>sent!</em>
+          </h1>
+          <p
+            style={{
+              fontSize: "15px",
+              fontWeight: 300,
+              color: "#6b7280",
+              margin: 0,
+              lineHeight: 1.6,
+            }}
+          >
+            Beni received your question and will reply as soon as possible.
+            Keep practising in the meantime!
+          </p>
+        </div>
+
+        <div style={{ width: "48px", height: "2px", borderRadius: "2px", background: "#c8dbb4" }} />
+
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
+          <Link
+            href="/lessons"
+            style={{
+              background: "#1a2e1a",
+              color: "#f5e6a3",
+              textDecoration: "none",
+              fontSize: "14px",
+              fontWeight: 500,
+              fontFamily: "Georgia, serif",
+              padding: "0.65rem 1.25rem",
+              borderRadius: "12px",
+            }}
+          >
+            Review lessons
+          </Link>
+          <button
+            onClick={() => setSubmitted(false)}
+            style={{
+              background: "white",
+              color: "#374151",
+              fontSize: "14px",
+              fontWeight: 400,
+              padding: "0.65rem 1.25rem",
+              borderRadius: "12px",
+              border: "0.5px solid #ddd8ce",
+              cursor: "pointer",
+              fontFamily: "inherit",
+            }}
+          >
+            Ask another question
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
@@ -90,38 +217,20 @@ export default function QuestionsPage() {
         }}
       >
         <form
-          action="https://formspree.io/f/mnjrodqn"
-          method="POST"
+          onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
         >
-          {/* Redirect to thank you page after submission */}
-          <input type="hidden" name="_next" value="/questions/thank-you" />
-
-          {/* Name + Email row */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div>
               <FieldLabel text="Your name" />
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="e.g. Erzsébet"
-                style={inputStyle}
-              />
+              <input type="text" name="name" required placeholder="e.g. Lea" style={inputStyle} />
             </div>
             <div>
               <FieldLabel text="Your email" />
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="your@email.com"
-                style={inputStyle}
-              />
+              <input type="email" name="email" required placeholder="your@email.com" style={inputStyle} />
             </div>
           </div>
 
-          {/* Lesson */}
           <div>
             <FieldLabel text="Which lesson?" />
             <select name="lesson" style={inputStyle}>
@@ -136,28 +245,24 @@ export default function QuestionsPage() {
             </select>
           </div>
 
-          {/* Question type */}
           <div>
             <FieldLabel text="Type of question" />
             <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {["Vocabulary", "Homework", "Grammar", "Pronunciation", "Speaking", "General"].map(
-                (type) => (
-                  <label key={type} className="q-pill">
-                    <input
-                      type="radio"
-                      name="questionType"
-                      value={type}
-                      defaultChecked={type === "Vocabulary"}
-                      style={{ accentColor: "#b87b5e", margin: 0 }}
-                    />
-                    {type}
-                  </label>
-                )
-              )}
+              {["Vocabulary", "Homework", "Grammar", "Pronunciation", "Speaking", "General"].map((type) => (
+                <label key={type} className="q-pill">
+                  <input
+                    type="radio"
+                    name="questionType"
+                    value={type}
+                    defaultChecked={type === "Vocabulary"}
+                    style={{ accentColor: "#b87b5e", margin: 0 }}
+                  />
+                  {type}
+                </label>
+              ))}
             </div>
           </div>
 
-          {/* Question textarea */}
           <div>
             <FieldLabel text="Your question" />
             <textarea
@@ -165,25 +270,18 @@ export default function QuestionsPage() {
               required
               rows={5}
               placeholder="Write your question here..."
-              style={{
-                ...inputStyle,
-                resize: "vertical",
-                lineHeight: 1.6,
-                minHeight: "120px",
-              }}
+              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.6, minHeight: "120px" }}
             />
           </div>
 
-          {/* Divider */}
           <div style={{ height: "0.5px", background: "#eee8df" }} />
 
-          {/* Submit */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <p style={{ fontSize: "12px", color: "#9ca3af", fontWeight: 300, margin: 0 }}>
               Beni will reply as soon as possible.
             </p>
-            <button type="submit" className="q-submit">
-              Send question →
+            <button type="submit" className="q-submit" disabled={loading}>
+              {loading ? "Sending..." : "Send question →"}
             </button>
           </div>
         </form>
