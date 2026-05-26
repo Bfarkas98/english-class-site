@@ -90,10 +90,13 @@ export default function QuestionsPage() {
         }}
       >
         <form
-          action="PASTE_YOUR_FORMSPREE_LINK_HERE"
+          action="https://formspree.io/f/mnjrodqn"
           method="POST"
           style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
         >
+          {/* Redirect to thank you page after submission */}
+          <input type="hidden" name="_next" value="/questions/thank-you" />
+
           {/* Name + Email row */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div>
