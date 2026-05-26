@@ -1,4 +1,4 @@
-import LessonCard from "@/components/LessonCard";
+import Link from "next/link";
 import { lessons } from "@/data/lessons";
 
 export default function LessonsPage() {
@@ -8,15 +8,20 @@ export default function LessonsPage() {
         Lessons
       </h1>
 
-      {lessons.map((lesson) => (
-        <LessonCard
-          key={lesson.id}
-          title={lesson.title}
-          memo={lesson.memo}
-          homework={lesson.homework}
-          vocab={lesson.vocab}
-        />
-      ))}
+      <div className="bg-white rounded-2xl shadow p-6">
+        <ul className="space-y-4">
+          {lessons.map((lesson) => (
+            <li key={lesson.id}>
+              <Link
+                href={`/lessons/${lesson.slug}`}
+                className="text-xl text-blue-600 hover:underline"
+              >
+                • {lesson.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
