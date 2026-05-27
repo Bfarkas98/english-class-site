@@ -11,7 +11,7 @@ export default async function MainLayout({
   const { userId } = await auth();
 
   if (!userId) {
-    redirect("https://merry-jay-48.accounts.dev/sign-in");
+    redirect("https://accounts.englishclasswithbeni.xyz/sign-in");
   }
 
   return (
