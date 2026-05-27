@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 
 const links = [
   { href: "/", label: "Home" },
@@ -74,7 +74,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Nav links + user */}
+        {/* Nav links + auth */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
           {links.map(({ href, label }) => {
             const isActive =
@@ -107,25 +107,51 @@ export default function Navbar() {
             );
           })}
 
-          {/* Clerk user button — shows avatar, sign out, profile */}
+          {/* Auth section */}
           <div
             style={{
               marginLeft: "0.75rem",
               paddingLeft: "0.75rem",
               borderLeft: "0.5px solid rgba(245, 230, 163, 0.15)",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: {
-                    width: "28px",
-                    height: "28px",
-                    border: "1.5px solid rgba(245,230,163,0.3)",
+            {/* Signed out — show sign in button */}
+            <Show when="signed-out">
+              <SignInButton>
+                <button
+                  style={{
+                    background: "rgba(245, 230, 163, 0.1)",
+                    border: "0.5px solid rgba(245, 230, 163, 0.3)",
+                    borderRadius: "8px",
+                    color: "#f5e6a3",
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    padding: "5px 14px",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  Sign in
+                </button>
+              </SignInButton>
+            </Show>
+
+            {/* Signed in — show avatar */}
+            <Show when="signed-in">
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: {
+                      width: "28px",
+                      height: "28px",
+                      border: "1.5px solid rgba(245,230,163,0.3)",
+                    },
                   },
-                },
-              }}
-            />
+                }}
+              />
+            </Show>
           </div>
         </div>
       </div>
