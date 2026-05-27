@@ -193,7 +193,7 @@ export default function LessonCard({
                         marginTop: "0.1rem",
                       }}
                     >
-                      "{word.example}"
+                     {`"${word.example}"`}
                     </span>
                   ) : (
                     <span
