@@ -1,8 +1,13 @@
 import { clerkMiddleware } from '@clerk/nextjs/server'
+import { NextFetchEvent, NextRequest } from 'next/server'
 
-export const proxy = clerkMiddleware(async (auth) => {
+const clerk = clerkMiddleware(async (auth) => {
   await auth.protect()
 })
+
+export function proxy(request: NextRequest, event: NextFetchEvent) {
+  return clerk(request, event)
+}
 
 export const config = {
   matcher: [
