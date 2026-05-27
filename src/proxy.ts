@@ -1,9 +1,7 @@
 import { clerkMiddleware } from '@clerk/nextjs/server'
 import { NextFetchEvent, NextRequest } from 'next/server'
 
-const clerk = clerkMiddleware(async (auth) => {
-  await auth.protect()
-})
+const clerk = clerkMiddleware()
 
 export function proxy(request: NextRequest, event: NextFetchEvent) {
   return clerk(request, event)
