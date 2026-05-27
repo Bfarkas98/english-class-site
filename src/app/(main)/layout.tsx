@@ -1,14 +1,18 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Protect all routes under (main) — redirects to Clerk sign-in if not signed in
-  await auth.protect();
+  const { userId } = await auth();
+
+  if (!userId) {
+    redirect("https://merry-jay-48.accounts.dev/sign-in");
+  }
 
   return (
     <>
