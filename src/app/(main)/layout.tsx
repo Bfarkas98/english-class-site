@@ -14,7 +14,7 @@ export default async function MainLayout({
     redirect("https://accounts.englishclasswithbeni.xyz/sign-in");
   }
 
-  return (
+  return ( 
     <>
       <Navbar />
       <main
