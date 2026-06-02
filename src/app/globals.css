@@ -1,6 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?...");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap");
 @import "tailwindcss";
-
 
 html,
 body {
@@ -12,45 +11,72 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Serif headings use Lora — applied via inline styles in components,
-   but this ensures it's available globally as a fallback */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: "Lora", Georgia, serif;
   font-weight: 600;
   line-height: 1.2;
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Better box sizing */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/* Remove default list styles */
-ul, ol {
+ul,
+ol {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* Consistent focus ring */
 :focus-visible {
   outline: 2px solid #7c9e5e;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Prevent layout shift from scrollbar appearing */
 html {
   overflow-y: scroll;
 }
 
-/* Responsive images */
 img {
   max-width: 100%;
   display: block;
+}
+
+@keyframes calendar-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .form-grid-two-col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.footer-link:hover {
+  color: #374151;
 }

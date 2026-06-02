@@ -2,24 +2,46 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import PageHeader from "@/components/PageHeader";
 import "./questions.css";
 
 export default function QuestionsPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     const form = e.currentTarget;
     const data = new FormData(form);
-    await fetch("https://formspree.io/f/mnjrodqn", {
-      method: "POST",
-      body: data,
-      headers: { Accept: "application/json" },
-    });
-    setLoading(false);
-    setSubmitted(true);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mnjrodqn", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        const message =
+          payload?.error ||
+          "Something went wrong sending your question. Please try again.";
+        throw new Error(message);
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong sending your question. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (submitted) {
@@ -145,82 +167,15 @@ export default function QuestionsPage() {
 
   return (
     <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-
-      {/* Page header */}
-      <div
-        style={{
-          background: "#1a2e1a",
-          borderRadius: "20px",
-          padding: "1.75rem 2rem",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(255,255,255,0.04) 27px, rgba(255,255,255,0.04) 28px)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0, left: 0, right: 0,
-            height: "3px",
-            background: "linear-gradient(90deg, #f5e6a3, #e8c97a, #f5e6a3)",
-            opacity: 0.7,
-          }}
-        />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              background: "rgba(184, 123, 94, 0.2)",
-              border: "0.5px solid rgba(184, 123, 94, 0.35)",
-              color: "#e8b49a",
-              fontSize: "11px",
-              fontWeight: 500,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              padding: "4px 11px",
-              borderRadius: "100px",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Direct to Beni
-          </div>
-          <h1
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: "1.5rem",
-              fontWeight: 600,
-              color: "#f0ece0",
-              margin: "0 0 0.4rem",
-              lineHeight: 1.2,
-            }}
-          >
-            Ask a <em style={{ fontStyle: "italic", color: "#f5e6a3" }}>Question</em>
-          </h1>
-          <p
-            style={{
-              fontSize: "14px",
-              fontWeight: 300,
-              color: "rgba(240, 236, 224, 0.55)",
-              margin: 0,
-              lineHeight: 1.5,
-            }}
-          >
-            Any question about a lesson, homework or vocabulary — just send it here.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Direct to Beni"
+        title="Ask a"
+        titleAccent="Question"
+        description="Any question about a lesson, homework or vocabulary — just send it here."
+        accentColor="#e8b49a"
+        badgeBg="rgba(184, 123, 94, 0.2)"
+        badgeBorder="rgba(184, 123, 94, 0.35)"
+      />
 
       {/* Form card */}
       <div
@@ -235,7 +190,24 @@ export default function QuestionsPage() {
           onSubmit={handleSubmit}
           style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+          {error && (
+            <div
+              role="alert"
+              style={{
+                background: "#fef2f2",
+                border: "0.5px solid #fecaca",
+                borderRadius: "12px",
+                padding: "0.75rem 1rem",
+                fontSize: "13px",
+                color: "#991b1b",
+                lineHeight: 1.5,
+              }}
+            >
+              {error}
+            </div>
+          )}
+
+          <div className="form-grid-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div>
               <FieldLabel text="Your name" />
               <input type="text" name="name" required placeholder="e.g. Lea" style={inputStyle} />
@@ -291,7 +263,15 @@ export default function QuestionsPage() {
 
           <div style={{ height: "0.5px", background: "#eee8df" }} />
 
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "0.75rem",
+            }}
+          >
             <p style={{ fontSize: "12px", color: "#9ca3af", fontWeight: 300, margin: 0 }}>
               Beni will reply as soon as possible.
             </p>

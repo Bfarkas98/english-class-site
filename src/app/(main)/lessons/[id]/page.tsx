@@ -56,9 +56,8 @@ export default async function LessonPage({
       {/* Prev / Next navigation */}
       {(prevLesson || nextLesson) && (
         <div
+          className="grid grid-cols-1 sm:grid-cols-2"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
             gap: "0.75rem",
             marginTop: "0.25rem",
           }}

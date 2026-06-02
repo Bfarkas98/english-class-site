@@ -1,76 +1,19 @@
+import PageHeader from "@/components/PageHeader";
 import Link from "next/link";
 import { lessons } from "@/data/lessons";
 
 export default function LessonsPage() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+      <PageHeader
+        badge={`${lessons.length} lesson${lessons.length !== 1 ? "s" : ""}`}
+        title="All"
+        titleAccent="Lessons"
+        accentColor="#a8c98a"
+        badgeBg="rgba(124, 158, 94, 0.2)"
+        badgeBorder="rgba(124, 158, 94, 0.35)"
+      />
 
-      {/* Page header */}
-      <div
-        style={{
-          background: "#1a2e1a",
-          borderRadius: "20px",
-          padding: "1.75rem 2rem",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(255,255,255,0.04) 27px, rgba(255,255,255,0.04) 28px)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0, left: 0, right: 0,
-            height: "3px",
-            background: "linear-gradient(90deg, #f5e6a3, #e8c97a, #f5e6a3)",
-            opacity: 0.7,
-          }}
-        />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              background: "rgba(124, 158, 94, 0.2)",
-              border: "0.5px solid rgba(124, 158, 94, 0.35)",
-              color: "#a8c98a",
-              fontSize: "11px",
-              fontWeight: 500,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              padding: "4px 11px",
-              borderRadius: "100px",
-              marginBottom: "0.75rem",
-            }}
-          >
-            {lessons.length} lesson{lessons.length !== 1 ? "s" : ""}
-          </div>
-          <h1
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: "1.5rem",
-              fontWeight: 600,
-              color: "#f0ece0",
-              margin: 0,
-              lineHeight: 1.2,
-            }}
-          >
-            All <em style={{ fontStyle: "italic", color: "#f5e6a3" }}>Lessons</em>
-          </h1>
-        </div>
-      </div>
-
-      {/* Lesson list */}
       <div
         style={{
           background: "white",
@@ -117,7 +60,6 @@ export default function LessonsPage() {
                   className="group hover:bg-[#f9f7f3]"
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    {/* Lesson number badge */}
                     <span
                       style={{
                         width: "28px",
@@ -163,7 +105,6 @@ export default function LessonsPage() {
                     </div>
                   </div>
 
-                  {/* Arrow */}
                   <span
                     style={{
                       fontSize: "16px",
@@ -181,7 +122,6 @@ export default function LessonsPage() {
           </ul>
         )}
       </div>
-
     </div>
   );
 }

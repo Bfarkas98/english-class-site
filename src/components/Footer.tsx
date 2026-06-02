@@ -61,16 +61,18 @@ export default function Footer() {
         </div>
 
         {/* Nav links */}
-        <nav style={{ display: "flex", gap: "1.5rem" }}>
+        <nav style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
+              className="footer-link"
               style={{
                 fontSize: "13px",
                 fontWeight: 400,
                 color: "#6b7280",
                 textDecoration: "none",
+                transition: "color 0.15s",
               }}
             >
               {label}
