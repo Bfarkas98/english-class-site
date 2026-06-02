@@ -1,222 +1,218 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CALENDAR_TIMEZONE_LABEL,
+  type CalendarView,
+  DEFAULT_DESKTOP_VIEW,
+  DEFAULT_MOBILE_VIEW,
+  getGoogleCalendarEmbedUrl,
+  getGoogleCalendarMobileUrl,
   getGoogleCalendarPublicUrl,
 } from "@/lib/calendar";
+import { useIsMobileCalendar } from "@/hooks/useMediaQuery";
 
-type CalendarProps = {
-  src: string;
-};
+const IFRAME_HEIGHT = {
+  AGENDA: { mobile: 560, desktop: 620 },
+  MONTH: { mobile: 520, desktop: 680 },
+} as const;
 
-export default function Calendar({ src }: CalendarProps) {
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
+export default function Calendar() {
+  const isMobile = useIsMobileCalendar();
+  const [preferredView, setPreferredView] = useState<CalendarView | null>(null);
+  const view =
+    preferredView ?? (isMobile ? DEFAULT_MOBILE_VIEW : DEFAULT_DESKTOP_VIEW);
+
   const publicUrl = getGoogleCalendarPublicUrl();
+  const mobileUrl = getGoogleCalendarMobileUrl();
+  const openUrl = isMobile ? mobileUrl : publicUrl;
 
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      if (!loaded) {
-        setFailed(true);
-      }
-    }, 15000);
-
-    return () => window.clearTimeout(timeout);
-  }, [loaded]);
+  const iframeHeight = IFRAME_HEIGHT[view][isMobile ? "mobile" : "desktop"];
+  const embedUrl = useMemo(
+    () => getGoogleCalendarEmbedUrl(view, iframeHeight),
+    [view, iframeHeight]
+  );
 
   return (
-    <div
-      style={{
-        background: "white",
-        border: "0.5px solid #ddd8ce",
-        borderRadius: "20px",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          padding: "0.85rem 1.25rem",
-          borderBottom: "0.5px solid #eee8df",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          flexWrap: "wrap",
-        }}
-      >
-        <div
-          style={{
-            width: "8px",
-            height: "8px",
-            borderRadius: "50%",
-            background: "#5e7eb8",
-            flexShrink: 0,
-          }}
+    <div className="calendar-shell">
+      {isMobile && (
+        <div className="calendar-mobile-cta">
+          <div className="calendar-mobile-cta__icon" aria-hidden="true">
+            📅
+          </div>
+          <div className="calendar-mobile-cta__copy">
+            <p className="calendar-mobile-cta__title">Viewing on your phone?</p>
+            <p className="calendar-mobile-cta__text">
+              The list view below works best on mobile. For full navigation,
+              open the schedule in Google Calendar.
+            </p>
+          </div>
+          <a
+            href={openUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="calendar-btn calendar-btn--primary calendar-btn--block"
+          >
+            Open lesson schedule ↗
+          </a>
+        </div>
+      )}
+
+      <div className="calendar-panel">
+        <div className="calendar-panel__header">
+          <div className="calendar-panel__brand">
+            <span className="calendar-panel__dot" aria-hidden="true" />
+            <span className="calendar-panel__name">English Class with Beni</span>
+          </div>
+
+          <div className="calendar-panel__actions">
+            <span className="calendar-panel__timezone">
+              {CALENDAR_TIMEZONE_LABEL}
+            </span>
+
+            <div
+              className={`calendar-view-toggle${isMobile ? " calendar-view-toggle--mobile-inline" : ""}`}
+              role="tablist"
+              aria-label="Calendar view"
+            >
+              <ViewButton
+                active={view === "AGENDA"}
+                onClick={() => setPreferredView("AGENDA")}
+                label="Upcoming"
+              />
+              <ViewButton
+                active={view === "MONTH"}
+                onClick={() => setPreferredView("MONTH")}
+                label="Month"
+              />
+            </div>
+
+            <a
+              href={openUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="calendar-btn calendar-btn--soft calendar-btn--compact"
+            >
+              Open ↗
+            </a>
+          </div>
+        </div>
+
+        <CalendarFrame
+          key={embedUrl}
+          embedUrl={embedUrl}
+          iframeHeight={iframeHeight}
+          isMobile={isMobile}
+          openUrl={openUrl}
         />
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: 500,
-            color: "#374151",
-            fontFamily: "Georgia, serif",
-          }}
-        >
-          English Class with Beni
-        </span>
-        <span
-          style={{
-            fontSize: "12px",
-            color: "#9ca3af",
-            marginLeft: "auto",
-            fontWeight: 300,
-          }}
-        >
-          {CALENDAR_TIMEZONE_LABEL}
-        </span>
+      </div>
+
+      {isMobile && (
         <a
-          href={publicUrl}
+          href={openUrl}
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            fontSize: "12px",
-            color: "#5e7eb8",
-            textDecoration: "none",
-            fontWeight: 500,
-            padding: "4px 10px",
-            borderRadius: "8px",
-            border: "0.5px solid #c5d4ef",
-            background: "#f0f4fb",
-            whiteSpace: "nowrap",
-          }}
+          className="calendar-sticky-open"
         >
           Open in Google Calendar ↗
         </a>
-      </div>
-
-      <div style={{ position: "relative", minHeight: "clamp(420px, 70vh, 680px)" }}>
-        {!loaded && !failed && (
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.75rem",
-              background: "#f9f7f3",
-              zIndex: 1,
-            }}
-          >
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "50%",
-                border: "3px solid #e8e3da",
-                borderTopColor: "#5e7eb8",
-                animation: "calendar-spin 0.8s linear infinite",
-              }}
-            />
-            <p
-              style={{
-                margin: 0,
-                fontSize: "13px",
-                color: "#9ca3af",
-                fontWeight: 300,
-              }}
-            >
-              Loading calendar…
-            </p>
-          </div>
-        )}
-
-        {failed && (
-          <div
-            role="alert"
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.75rem",
-              padding: "2rem",
-              textAlign: "center",
-              background: "#f9f7f3",
-              zIndex: 2,
-            }}
-          >
-            <span style={{ fontSize: "2rem" }} aria-hidden="true">
-              📅
-            </span>
-            <p
-              style={{
-                margin: 0,
-                fontSize: "15px",
-                fontWeight: 500,
-                color: "#374151",
-                fontFamily: "Georgia, serif",
-              }}
-            >
-              Calendar could not load here
-            </p>
-            <p
-              style={{
-                margin: 0,
-                fontSize: "13px",
-                color: "#6b7280",
-                fontWeight: 300,
-                maxWidth: "320px",
-                lineHeight: 1.5,
-              }}
-            >
-              Your browser may be blocking the embedded calendar. Open it
-              directly in Google Calendar instead.
-            </p>
-            <a
-              href={publicUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                marginTop: "0.25rem",
-                background: "#1a2e1a",
-                color: "#f5e6a3",
-                textDecoration: "none",
-                fontSize: "14px",
-                fontWeight: 500,
-                fontFamily: "Georgia, serif",
-                padding: "0.65rem 1.25rem",
-                borderRadius: "12px",
-              }}
-            >
-              View calendar in Google ↗
-            </a>
-          </div>
-        )}
-
-        <iframe
-          src={src}
-          style={{
-            border: 0,
-            display: "block",
-            width: "100%",
-            height: "clamp(420px, 70vh, 680px)",
-            opacity: loaded ? 1 : 0,
-            transition: "opacity 0.3s ease",
-          }}
-          title="Lesson calendar"
-          allowFullScreen
-          referrerPolicy="no-referrer-when-downgrade"
-          onLoad={() => {
-            setLoaded(true);
-            setFailed(false);
-          }}
-          onError={() => setFailed(true)}
-        />
-      </div>
+      )}
     </div>
+  );
+}
+
+function CalendarFrame({
+  embedUrl,
+  iframeHeight,
+  isMobile,
+  openUrl,
+}: {
+  embedUrl: string;
+  iframeHeight: number;
+  isMobile: boolean;
+  openUrl: string;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    if (loaded) return;
+
+    const timeout = window.setTimeout(() => {
+      setFailed(true);
+    }, isMobile ? 20000 : 15000);
+
+    return () => window.clearTimeout(timeout);
+  }, [loaded, isMobile, embedUrl]);
+
+  return (
+    <div
+      className="calendar-frame-wrap"
+      style={{ minHeight: iframeHeight }}
+    >
+      {!loaded && !failed && (
+        <div className="calendar-frame-wrap__loading" aria-live="polite">
+          <div className="calendar-spinner" aria-hidden="true" />
+          <p>Loading calendar…</p>
+        </div>
+      )}
+
+      {failed && (
+        <div className="calendar-frame-wrap__error" role="alert">
+          <span aria-hidden="true">📅</span>
+          <p className="calendar-frame-wrap__error-title">
+            Embedded calendar unavailable
+          </p>
+          <p className="calendar-frame-wrap__error-text">
+            {isMobile
+              ? "Use the button above to open your lesson schedule in Google Calendar."
+              : "Your browser may be blocking the embed. Open the calendar directly instead."}
+          </p>
+          <a
+            href={openUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="calendar-btn calendar-btn--primary"
+          >
+            View in Google Calendar ↗
+          </a>
+        </div>
+      )}
+
+      <iframe
+        src={embedUrl}
+        className="calendar-frame"
+        style={{ height: iframeHeight }}
+        title="Lesson calendar"
+        allowFullScreen
+        scrolling="auto"
+        onLoad={() => {
+          setLoaded(true);
+          setFailed(false);
+        }}
+      />
+    </div>
+  );
+}
+
+function ViewButton({
+  active,
+  onClick,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={active}
+      className={`calendar-view-toggle__btn${active ? " calendar-view-toggle__btn--active" : ""}`}
+      onClick={onClick}
+    >
+      {label}
+    </button>
   );
 }

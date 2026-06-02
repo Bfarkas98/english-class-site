@@ -17,13 +17,7 @@ export default async function MainLayout({
   return ( 
     <>
       <Navbar />
-      <main
-        style={{
-          maxWidth: "64rem",
-          margin: "0 auto",
-          padding: "clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) clamp(2.5rem, 6vw, 4rem)",
-        }}
-      >
+      <main className="site-container">
         {children}
       </main>
       <Footer />

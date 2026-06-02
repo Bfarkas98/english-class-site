@@ -166,7 +166,7 @@ export default function QuestionsPage() {
   }
 
   return (
-    <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+    <div className="page-stack" style={{ maxWidth: "640px", margin: "0 auto" }}>
       <PageHeader
         badge="Direct to Beni"
         title="Ask a"
