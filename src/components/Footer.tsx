@@ -8,25 +8,8 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        borderTop: "0.5px solid #ddd8ce",
-        marginTop: "3rem",
-        padding: "2rem 1.5rem",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "64rem",
-          margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "1rem",
-        }}
-      >
-        {/* Brand */}
+    <footer className="site-footer">
+      <div className="site-footer__inner">
         <div>
           <span
             style={{
@@ -43,7 +26,7 @@ export default function Footer() {
               fontFamily: "Georgia, serif",
               fontSize: "0.95rem",
               fontStyle: "italic",
-              color: "#7c9e5e",
+              color: "var(--color-lessons)",
             }}
           >
             with Beni
@@ -60,27 +43,22 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Nav links */}
-        <nav style={{ display: "flex", gap: "1.5rem" }}>
+        <nav style={{ display: "flex", gap: "1.5rem", flexWrap: "wrap" }}>
           {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              style={{
-                fontSize: "13px",
-                fontWeight: 400,
-                color: "#6b7280",
-                textDecoration: "none",
-              }}
-            >
+            <Link key={href} href={href} className="footer-link" style={{
+              fontSize: "13px",
+              fontWeight: 400,
+              color: "#6b7280",
+              textDecoration: "none",
+              transition: "color 0.15s",
+            }}>
               {label}
             </Link>
           ))}
         </nav>
 
-        {/* Dots */}
-        <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-          {["#7c9e5e", "#5e7eb8", "#b87b5e"].map((c) => (
+        <div style={{ display: "flex", gap: "5px", alignItems: "center" }} aria-hidden="true">
+          {["var(--color-lessons)", "var(--color-calendar)", "var(--color-questions)"].map((c) => (
             <div
               key={c}
               style={{

@@ -12,8 +12,13 @@
   transition: opacity 0.15s;
 }
 
-.q-submit:hover {
+.q-submit:hover:not(:disabled) {
   opacity: 0.85;
+}
+
+.q-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .q-pill {

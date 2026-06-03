@@ -17,13 +17,7 @@ export default async function MainLayout({
   return ( 
     <>
       <Navbar />
-      <main
-        style={{
-          maxWidth: "64rem",
-          margin: "0 auto",
-          padding: "2rem 1.5rem 4rem",
-        }}
-      >
+      <main className="site-container">
         {children}
       </main>
       <Footer />
