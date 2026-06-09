@@ -238,4 +238,50 @@ Describe one room in your home in 3–5 sentences using "there is" and "there ar
       { english: "there are", hungarian: "vannak — több dologra", example: "There are two bedrooms." },
     ],
   },
+  {
+    id: 3,
+    slug: "lesson-3",
+    title: "Lesson 3 – Food, Drinks & Shopping",
+    date: "June 2026",
+
+    memo: `
+In Lesson 3 students practiced:
+- talking about food and drinks
+- saying what they eat for breakfast, lunch, and dinner
+- using "I like..." and "I don't like..."
+- using "some" and "any"
+- asking simple shopping questions
+- saying prices
+- doing a shop/restaurant roleplay
+`,
+
+    homework: `
+Learn the vocabulary words.
+Write 5 sentences about food and drinks.
+Practice the shopping dialogue out loud 3 times.
+`,
+
+    vocab: [
+      { english: "food", hungarian: "étel", example: "I like Italian food." },
+      { english: "drink", hungarian: "ital", example: "My favourite drink is coffee." },
+      { english: "breakfast", hungarian: "reggeli", example: "I eat breakfast at 7 o'clock." },
+      { english: "lunch", hungarian: "ebéd", example: "I have lunch at work." },
+      { english: "dinner", hungarian: "vacsora", example: "We have dinner at home." },
+      { english: "bread", hungarian: "kenyér", example: "I buy bread every day." },
+      { english: "milk", hungarian: "tej", example: "There is milk in the fridge." },
+      { english: "cheese", hungarian: "sajt", example: "I like cheese." },
+      { english: "meat", hungarian: "hús", example: "I eat meat for lunch." },
+      { english: "chicken", hungarian: "csirke", example: "Chicken is my favourite meat." },
+      { english: "fish", hungarian: "hal", example: "I sometimes eat fish." },
+      { english: "vegetables", hungarian: "zöldségek", example: "Vegetables are healthy." },
+      { english: "fruit", hungarian: "gyümölcs", example: "I eat fruit every day." },
+      { english: "apple", hungarian: "alma", example: "I would like an apple." },
+      { english: "potato", hungarian: "burgonya / krumpli", example: "I need potatoes." },
+      { english: "rice", hungarian: "rizs", example: "I eat rice with chicken." },
+      { english: "water", hungarian: "víz", example: "I drink water every day." },
+      { english: "coffee", hungarian: "kávé", example: "I drink coffee in the morning." },
+      { english: "shop", hungarian: "bolt", example: "I go to the shop." },
+      { english: "price", hungarian: "ár", example: "What is the price?" },
+    ],
+  },
 ];
