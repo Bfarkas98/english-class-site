@@ -284,4 +284,82 @@ Practice the shopping dialogue out loud 3 times.
       { english: "price", hungarian: "ár", example: "What is the price?" },
     ],
   },
+  {
+    id: 4,
+    slug: "work-and-daily-routine",
+    title: "Work & Daily Routine",
+    date: "2026/06/11",
+
+    memo: `
+In this lesson we focused on talking about daily routines, work, schedules, and free time using the present simple tense. The priority was speaking confidence first, grammar accuracy second.
+
+Key grammar — Present Simple:
+• Use it for daily routines, habits, and regular activities.
+• With he/she/it, add -s or -es in positive sentences: "He wakes up", "She goes home", "He watches TV".
+• In negatives and questions, use does/doesn't with the base verb: "Does he work?", "He doesn't work".
+• Positive: I wake up at six. / He wakes up at six.
+• Negative: I don't work on Sunday. / She doesn't drink coffee.
+• Question: Do you work every day? / Does she drink coffee?
+• Short answers: Yes, I do. / No, I don't. — Yes, she does. / No, she doesn't.
+
+Time expressions (frequency): always, usually, often, sometimes, rarely, never.
+
+We practiced warm-up questions (wake-up time, morning routine, start/finish work, after work), two mini dialogues (daily routine + work), a sentence-building exercise, mistake correction, and translation practice. We finished with an interview activity where students asked and answered questions about their day.
+
+Common mistakes to keep correcting: he/she + verb + s, "don't" vs "doesn't", "do" vs "does", question word order, and time expressions. Good correction method: when a student says "He wake up at six", respond "Almost — He wakes up at six. Repeat: He wakes up at six", then ask again: "What time does he wake up?"
+`,
+
+    homework: `
+Part 1 — Learn the vocabulary
+Learn the vocabulary words from this lesson.
+
+Part 2 — Write about your day
+Write 8–10 sentences about your daily routine using this structure:
+• I usually wake up at ...
+• In the morning, I ...
+• I go to work ...
+• I start work at ...
+• I finish work at ...
+• After work, I ...
+• In the evening, I ...
+• I usually go to bed at ...
+
+Part 3 — Answer these questions
+1. What time do you wake up?
+2. What do you do in the morning?
+3. How do you go to work?
+4. What time do you start work?
+5. What do you do after work?
+6. What time do you go to bed?
+`,
+
+    vocab: [
+      { english: "wake up", hungarian: "felébredni", example: "I wake up at six o'clock." },
+      { english: "get up", hungarian: "felkelni", example: "I get up at half past six." },
+      { english: "brush my teeth", hungarian: "fogat mosni", example: "I brush my teeth every morning." },
+      { english: "get dressed", hungarian: "felöltözni", example: "I get dressed after breakfast." },
+      { english: "have breakfast", hungarian: "reggelizni", example: "I have breakfast at home." },
+      { english: "go to work", hungarian: "munkába menni", example: "I go to work by car." },
+      { english: "start work", hungarian: "elkezdeni a munkát", example: "I start work at eight." },
+      { english: "finish work", hungarian: "befejezni a munkát", example: "I finish work at four." },
+      { english: "go home", hungarian: "hazamenni", example: "I go home after work." },
+      { english: "cook dinner", hungarian: "vacsorát főzni", example: "I cook dinner in the evening." },
+      { english: "have dinner", hungarian: "vacsorázni", example: "We have dinner at seven." },
+      { english: "relax", hungarian: "pihenni", example: "I relax after work." },
+      { english: "watch TV", hungarian: "tévét nézni", example: "I watch TV in the evening." },
+      { english: "read a book", hungarian: "könyvet olvasni", example: "I read a book before bed." },
+      { english: "go to bed", hungarian: "lefeküdni", example: "I go to bed at ten." },
+      { english: "early", hungarian: "korán", example: "I wake up early." },
+      { english: "late", hungarian: "későn", example: "I don't go to bed late." },
+      { english: "busy", hungarian: "elfoglalt", example: "I am busy at work." },
+      { english: "tired", hungarian: "fáradt", example: "I am tired after work." },
+      { english: "free time", hungarian: "szabadidő", example: "I relax in my free time." },
+      { english: "always", hungarian: "mindig", example: "I always drink coffee in the morning." },
+      { english: "usually", hungarian: "általában", example: "I usually wake up early." },
+      { english: "often", hungarian: "gyakran", example: "I often go shopping after work." },
+      { english: "sometimes", hungarian: "néha", example: "I sometimes watch TV in the evening." },
+      { english: "rarely", hungarian: "ritkán", example: "I rarely eat breakfast." },
+      { english: "never", hungarian: "soha", example: "I never go to bed after midnight." },
+    ],
+  },
 ];
